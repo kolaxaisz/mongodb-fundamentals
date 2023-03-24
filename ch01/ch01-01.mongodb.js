@@ -6,9 +6,9 @@
 // Select the database to use.
 use('mongodb-fundamentals-db');
 
-db.createCollection( 'myCappedCollection',
-{
-     capped: true,
-     size: 256,
-     max: 5
-})
+db.createCollection('myCappedCollection',
+     {
+          capped: true,
+          size: 256,
+          max: 5
+     })

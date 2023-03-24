@@ -259,3 +259,346 @@ Formatting the find Output Using the `pretty()` method:
 
 
 
+
+
+## Chapter 2. - Documents and Data Types
+
+### 2.1. - Introduction
+
+- We want to build **lightweight and flexible** applications that can quickly 
+adapt to these new requirements and ship them to production as quickly as 
+possible. 
+- We want our databases to become agile so that they can adapt to 
+the ever-changing needs of our applications, 
+  - reduce downtime,   
+  - scale out easily, 
+  - and perform efficiently. 
+
+MongoDB is a perfect fit for all such needs.
+
+
+### 2.2. - Introduction to JSON
+
+JSON is a full-text, lightweight format for data representation and 
+transportation. JavaScript's simple representation of objects gave birth 
+to JSON.
+
+JSON offers a human-readable, plain-text way of representing data. In 
+comparison to XML, where information is wrapped inside tags, and lots of 
+tags make it look bulky, JSON offers a compact and natural format where you 
+can easily focus on the information.
+
+On the other hand, JSON does not have any schema definition, and JSON 
+parsers only need to deal with opening and closing brackets and colons.
+
+When two systems, written in two different programming languages, want to 
+exchange data, they need to have a mutually agreed standard for 
+representing information. JSON provides that standard with its lightweight format. 
+
+One of the major reasons for the wide acceptance of JSON is its 
+language-independent format. 
+
+- <https://jsonlint.com/>
+
+### 2.3. - BSON
+
+Internally, MongoDB documents are stored in a binary format called BSON.
+
+- BSON documents are designed to be more efficient than JSON as they occupy 
+  less space and provide faster traversal.
+- With each document, BSON stores some meta-information, such as the length 
+  of the fields or the length of the sub-documents. The meta-information 
+  makes the document parsing, as well as traversing, faster.
+- BSON documents have ordered arrays. Each element in an array is prefixed by 
+  its index position and can be accessed using its index number.
+- BSON provides many additional data types, such as dates, integers, doubles, 
+  byte arrays, and more. 
+
+
+### 2.4. - MongoDB Documents
+
+A MongoDB database is composed of collections and documents.
+
+- Collections are analogous to tables and 
+- documents are analogous to rows within a table. 
+
+However, documents are much more flexible compared with the rows in a table.
+
+RDBMSes consist of a tabular data model that comprises rows and columns. 
+However, your applications may need to support more complex data structures,
+such as a nested object or a collection of objects. Tabular databases 
+restrict the storage of such complex data structures. In such cases, you 
+will have to split your data into multiple tables and change the 
+application's object structures accordingly. On the other hand, the 
+document-based data model of MongoDB allows your application to store and 
+retrieve more complex object structures due to the flexible JSON-like 
+format of the documents.
+
+1.  The documents provide a flexible and natural way of representing data. 
+    The data can be stored as is, without having to transform it into a 
+    database structure.
+   
+2.  The objects, nested objects, and arrays that are within a document are 
+    easily relatable to your programming language's object structure.
+   
+3.  With the ability of a flexible schema, the documents are agile in 
+    practice. They continuously integrate with application changes and new 
+    features without any major schema changes or downtimes.
+   
+4. Documents are self-contained pieces of data. They avoid the need to read 
+   multiple relational tables and table-joins to understand a complete unit 
+   of information.
+   
+5. The documents are extensible. You can use documents to store the entire 
+   object structure, use it as a map or a dictionary, as a key-value pair 
+   for quick lookup, or have a flat structure that resembles a relational 
+   table.
+
+
+In MongoDB documents, a non-existent field is always considered `null`.
+
+Documents can incorporate changes on the go without any downtime.
+
+
+### 2.5. - MongoDB Data Types
+
+Using the right data types in your documents is very important as correct 
+data types help you 
+- use the database features more effectively, 
+- avoid data corruption, and 
+- improve data usability.
+
+---
+
+- **Strings**
+
+  In JSON, a value that is wrapped in double quotes is considered a string. 
+
+---
+
+- **Numbers**
+
+  A JSON document does not specify whether a number is an integer, a float, 
+  or long.
+
+  MongoDB supports the following types of numbers:
+  - _double_: 64-bit floating point
+  - _int_: 32-bit signed integer
+  - _long_: 64-bit unsigned integer
+  - _decimal_: 128-bit floating point – which is IEE 754-compliant
+
+  _NumberInt_: The NumberInt constructor can be used if you want the number 
+  to be saved as a 32-bit integer and not as a 64-bit float.
+
+  ```js
+  var plainNum = 1299
+  var explicitInt = NumberInt("1299")
+  var explicitInt_double = NumberInt(1299)
+  ```
+  
+  _NumberLong_:
+
+  ```js
+  var explicitLong = NumberLong("777888222116643")
+  var explicitLong_double = NumberLong(444333222111242)
+  ```
+
+  _NumberDecimal_:
+
+  ```js
+  var explicitDecimal = NumberDecimal("142.42")
+  var explicitDecimal_double = NumberDecimal(142.42)
+  ```
+---
+
+- **Boolean**
+
+---
+
+- **Objects**
+
+  
+### 2.6. - Exercise 2.02: Creating Nested Objects
+
+```json
+{
+    "id": 14253,
+    "Title": "Beauty and the Beast",
+    "year": 2016,
+    "language": "English",
+    "genre": "Romance",
+    "director": "Christophe Gans",
+    "runtime": 112,
+    "imdb": {
+        "rating": 6.4,
+        "votes": "17762"
+    },
+    "tomatoes": {
+        "viewer": {
+            "rating": 3.9,
+            "votes": 238
+        },
+        "critic": {
+            "rating": 4.2,
+            "votes": 8
+        },
+        "fresh": 96,
+        "rotten": 7
+    }
+}
+```
+---
+
+- **Arrays**
+
+  ```js
+  var doc = {
+    first_array: [4,3,2,1]
+  }
+  
+  doc.first_array[3]
+  doc.first_array[4] = 99
+  doc.first_array[5] = [11,12]
+  doc.first_array
+  ```
+  
+### 2.7. - Exercise 2.03: Using Array Fields
+
+```json
+{
+    "id": 14253,
+    "Title": "Beauty and the Beast",
+    "year": 2016,
+    "language": "English",
+    "genre": "Romance",
+    "director": "Christophe Gans",
+    "runtime": 112,
+    "imdb": {
+        "rating": 6.4,
+        "votes": "17762"
+    },
+    "tomatoes": {
+        "viewer": {
+            "rating": 3.9,
+            "votes": 238
+        },
+        "critic": {
+            "rating": 4.2,
+            "votes": 8
+        },
+        "fresh": 96,
+        "rotten": 7
+    },
+    "comments": [
+        {
+            "name": "Talisa Maegyr",
+            "email": "oona_chaplin@gameofthron.es",
+            "text": "Rem itaque ad sit rem voluptatibus. Ad fugiat...",
+            "date": "1998-08-22T11:45:03.000+00:00"
+        },
+        {
+            "name": "Melisandre",
+            "email": "carice_van_houten@gameofthron.es",
+            "text": "Perspiciatis non debitis magnam. Voluptate...",
+            "date": "1974-06-22T07:31:47.000+00:00"
+        }
+    ]
+}
+```
+---
+
+- **NULL**
+
+Null is a special data type in a document and denotes a field that does not 
+contain a value. The null field can have only null as the value.
+
+---
+
+- **ObjectId**
+
+Every document in a collection must have an _`id` that contains a unique 
+value. This field acts as a p*rimary key* to these documents. The primary 
+keys are used to _uniquely identify the documents_, and they are always indexed. 
+
+If you insert a document without an _`id` field, the MongoDB driver will 
+autogenerate a unique ID and add it to the document. 
+
+The `ObjectId` value is designed to generate lightweight code that is unique 
+across different machines. It generates
+- a unique value of 12 bytes, where
+  - the first 4 bytes represent the timestamp, 
+  - bytes 5 to 9 represent a random value, and 
+  - the last 3 bytes are an incremental counter.
+
+---
+
+- **Dates**
+
+The MongoDB dates are stored in the form of _milliseconds since the Unix 
+epoch, which is January 1, 1970_. To store the millisecond's representation 
+of a date, MongoDB uses a **64-bit integer (long)**. Because of this, the date 
+fields have a range of around +/-290 million years since the Unix epoch. 
+
+One thing to note is that all dates are **stored in UTC**, and there is **no time 
+zone associated with them**.
+
+While working on the mongo shell, you can create Date instances using 
+- `Date()`
+- `new Date()`, or 
+- `new ISODate()`
+
+---
+
+- **Timestamps**
+
+---
+
+- **Binary Data**
+
+Binary data, also called BinData, is a BSON data type for storing data that 
+exists in a binary format.
+
+### 2.8. - Limits and Restrictions on Documents
+
+A document with too much information is bad in many ways. For this reason, 
+MongoDB puts a limit of 16 MB on the size of every document in the collection.
+
+A MongoDB BSON document supports nesting up to 100 levels, which is more 
+than enough. 
+
+### 2.9. - Exercise 2.04: Loading Data into an Atlas Cluster
+
+...
+
+
+### 2.10 - Activity 2.01: Modeling a Tweet into a JSON Document
+
+```json
+{
+    "id": 1,
+    "created_at": "Sun Apr 17 16:29:24 +0000 2011",
+    "user": {
+        "id": "Lord_Of_Winterfell",
+        "name": "Office of Ned Stark",
+        "profile_pic": "https://user.profile.pic",
+        "isVerified": true
+    },
+    "text": "Tweeps in the #north. The long nights are upon us. Do stock enough warm clothes, meat and mead…",
+    "hashtags": [
+        "north",
+        "WinterfellCares",
+        "flueshots"
+    ],
+    "mentions": [
+        "MaesterLuwin",
+        "TheNedStark",
+        "CatelynTheCat"
+    ],
+    "likes_count": 14925,
+    "retweet_count": 12165,
+    "comments_count": 0
+}
+```
+
+### Summary
+

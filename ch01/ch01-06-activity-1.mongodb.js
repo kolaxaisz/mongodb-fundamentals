@@ -1,4 +1,4 @@
-use ('mongodb-fundamentals-db')
+use('mongodb-fundamentals-db')
 
 /* db.activity1_movies_collection.insertMany([
     {
@@ -26,30 +26,31 @@ use ('mongodb-fundamentals-db')
 /* db.activity1_movies_collection.find().pretty() */
 
 db.activity1_awards_collection.insertOne({
-        "title": "Oscars",
-        "year": "1976",
-        "category": "Best Film",
-        "nominees": ["Rocky","All The President’s Men","Bound For Glory","Network","Taxi Driver"],
-        "winners" : 
+    "title": "Oscars",
+    "year": "1976",
+    "category": "Best Film",
+    "nominees": ["Rocky", "All The President’s Men", "Bound For Glory", "Network", "Taxi Driver"],
+    "winners":
         [
             {
-                "movie" : "Rocky"
+                "movie": "Rocky"
             }
         ]
-    })
+})
 
-db.activity1_awards_collection.insertOne(  {
-        "title": "Oscars",
-        "year": "1976",
-        "category": "Actor In A Leading Role",
-        "nominees": ["PETER FINCH","ROBERT DE NIRO","GIANCARLO GIANNINI"," WILLIAM HOLDEN","SYLVESTER STALLONE"],
-        "winners" : 
+db.activity1_awards_collection.insertOne({
+    "title": "Oscars",
+    "year": "1976",
+    "category": "Actor In A Leading Role",
+    "nominees": ["PETER FINCH", "ROBERT DE NIRO", "GIANCARLO GIANNINI", " WILLIAM HOLDEN", "SYLVESTER STALLONE"],
+    "winners":
         [
             {
-                "actor" : "PETER FINCH",
-                "movie" : "Network"
+                "actor": "PETER FINCH",
+                "movie": "Network"
             }
         ]
-    })
+})
 
 db.activity1_awards_collection.find().pretty()
+db.ac
